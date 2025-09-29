@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+label#themeToggle {
+  @apply fixed;
+  @apply inline-flex;
+  @apply items-center;
+  @apply cursor-pointer;
+  @apply bottom-4;
+  @apply left-4;
+  @apply backdrop-blur;
+}
+
+label#themeToggle input[type="checkbox"] {
+  @apply sr-only;
+}
+
+label#themeToggle .track {
+  @apply w-15;
+  @apply h-8;
+  @apply dark:bg-white/5;
+  @apply rounded-[var(--border-radius)];
+  @apply transition-colors;
+  @apply bg-black/25;
+}
+
+label#themeToggle .thumb {
+  @apply absolute;
+  @apply left-0.5;
+  @apply top-0.5;
+  @apply w-7;
+  @apply h-7;
+  @apply dark:bg-white/15;
+  @apply bg-black/35;
+  @apply rounded-[var(--border-radius)];
+  @apply shadow-md;
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+  @apply transition-all;
+  @apply duration-400;
+  @apply transform;
+  @apply peer-checked:translate-x-7;
+}
+
+label#themeToggle .thumb .moon {
+  @apply absolute;
+  @apply transition-opacity;
+  @apply duration-250;
+  @apply dark:opacity-100;
+  @apply opacity-0;
+  @apply w-3.5;
+  @apply h-3.5;
+  @apply stroke-white;
+  @apply fill-white;
+}
+
+label#themeToggle .thumb .sun {
+  @apply absolute;
+  @apply transition-opacity;
+  @apply duration-300;
+  @apply dark:opacity-0;
+  @apply opacity-100;
+  @apply w-3.5;
+  @apply h-3.5;
+  @apply stroke-white;
+  @apply fill-white;
+}

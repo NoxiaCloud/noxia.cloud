@@ -3,46 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/assets/icon.png" />
+    <link
+      rel="icon"
+      href="/static/assets/light.icon.png"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      href="/static/assets/dark.icon.png"
+      media="(prefers-color-scheme: dark)"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        if (
+          savedTheme === "dark" ||
+          (!savedTheme &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="/static/css/global.css" />
     <title>Noxia - {% block title %}{% endblock %}</title>
   </head>
   <body>
+    <div id="splashScreen">
+      <div class="loader"></div>
+    </div>
     {% block content %} {% endblock %}
-    <button
-      id="theme-toggle"
-      class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"
-    >
-      Toggle Dark Mode
-    </button>
+    <label id="themeToggle">
+      <input type="checkbox" class="peer" />
+      <div class="track"></div>
+      <div class="thumb">
+        <i class="moon" data-feather="moon"></i>
+        <i class="sun" data-feather="sun"></i>
+      </div>
+    </label>
     <script>
-      const toggleBtn = document.getElementById("theme-toggle");
-      const htmlElement = document.documentElement;
-
-      toggleBtn.addEventListener("click", () => {
-        console.log("Toggling dark mode");
-        if (htmlElement.classList.contains("dark")) {
-          htmlElement.classList.remove("dark");
-          localStorage.setItem("theme", "light");
-          console.log("Removed dark class");
+      document.addEventListener("DOMContentLoaded", () => {
+        const checkbox = document.querySelector(
+          "#themeToggle input[type='checkbox']"
+        );
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add("dark");
+          checkbox.checked = true;
         } else {
-          htmlElement.classList.add("dark");
-          localStorage.setItem("theme", "dark");
-          console.log("Added dark class");
+          document.documentElement.classList.remove("dark");
+          checkbox.checked = false;
         }
+        checkbox.addEventListener("input", () => {
+          if (checkbox.checked) {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+          }
+        });
       });
-
-      (function () {
-        if (
-          localStorage.getItem("theme") === "dark" ||
-          (!localStorage.getItem("theme") &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches)
-        ) {
-          htmlElement.classList.add("dark");
-        } else {
-          htmlElement.classList.remove("dark");
-        }
-      })();
+      feather.replace();
     </script>
   </body>
 </html>
