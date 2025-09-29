@@ -4,7 +4,7 @@
   "description": "Primary website for Noxia",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npx tailwindcss -i css/global.css -o static/css/global.css --watch\" \"python3 app.py\""
+    "dev": "concurrently \"npx tailwindcss -i css/global.css -o static/css/global.css --watch\" \"python app.py\""
   },
   "repository": {
     "type": "git",
