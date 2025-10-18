@@ -32,18 +32,93 @@
     <title>Noxia - {% block title %}{% endblock %}</title>
   </head>
   <body>
-    <div id="splashScreen">
-      <div class="loader"></div>
-    </div>
-    {% block content %} {% endblock %}
-    <label id="themeToggle">
-      <input type="checkbox" class="peer" />
-      <div class="track"></div>
-      <div class="thumb">
-        <i class="moon" data-feather="moon"></i>
-        <i class="sun" data-feather="sun"></i>
+    <header>
+      <img
+        src="/static/assets/light.icon.png"
+        class="dark:hidden max-w-7 mr-3"
+      />
+      <img
+        src="/static/assets/dark.icon.png"
+        class="hidden dark:block max-w-7 mr-3"
+      />
+      <h5>Noxia</h5>
+    </header>
+    <main class="px-4 md:px-[10%]">{% block content %} {% endblock %}</main>
+    <footer>
+      <div class="flex justify-between">
+        <div class="flex flex-col">
+          <div class="flex flex-row space-x-3 mb-3">
+            <img
+              src="/static/assets/light.icon.png"
+              class="dark:hidden max-w-8"
+            />
+            <img
+              src="/static/assets/dark.icon.png"
+              class="hidden dark:block max-w-8"
+            />
+            <h3>Noxia</h3>
+          </div>
+          <small>Hosting for the people, built in the open.</small>
+        </div>
+        <label id="themeToggle">
+          <input type="checkbox" class="peer" />
+          <div class="track"></div>
+          <div class="thumb">
+            <i class="moon" data-feather="moon"></i>
+            <i class="sun" data-feather="sun"></i>
+          </div>
+        </label>
       </div>
-    </label>
+      <div class="grid grid-cols-1 md:grid-cols-4 mt-10 md:space-y-0 space-y-6">
+        <div>
+          <h6>Products</h6>
+          <div class="flex flex-col space-y-2 mt-2">
+            <a>Virtual Private Servers</a>
+            <a>Web Hosting</a>
+          </div>
+        </div>
+        <div>
+          <h6>Company</h6>
+          <div class="flex flex-col space-y-2 mt-2">
+            <a>About</a>
+            <a>Contact</a>
+            <a>Terms & Conditions</a>
+            <a>Privacy Policy</a>
+            <a>Service Level Agreement</a>
+          </div>
+        </div>
+        <div>
+          <h6>Socials</h6>
+          <div class="flex flex-col space-y-2 mt-2">
+            <a class="group" href="https://github.com/NoxiaCloud"
+              ><i class="icon" data-feather="github"></i>Github</a
+            >
+            <a
+              class="group"
+              href="https://www.trustpilot.com/review/noxia.cloud"
+              ><i class="icon" data-feather="star"></i>Trustpilot</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-start mt-8">
+        <a
+          href="https://status.noxia.cloud"
+          class="group inline-flex items-center w-auto transition-colors duration-[1ms] px-3.5 py-1 border dark:border-white/5 border-black/10 dark:bg-white/5 bg-black/10 rounded-[var(--border-radius)]"
+        >
+          <span id="statusUp" class="hidden mr-1 mb-[1px]"
+            ><i class="icon" data-feather="check-circle"></i
+          ></span>
+          <span id="statusDown" class="hidden mr-1 mb-[1px]"
+            ><i class="icon" data-feather="alert-circle"></i
+          ></span>
+          <span id="statusM" class="hidden mr-1 mb-[1px]"
+            ><i class="icon" data-feather="alert-triangle"></i
+          ></span>
+          <span id="statusText">Fetching status...</span>
+        </a>
+      </div>
+    </footer>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const checkbox = document.querySelector(
@@ -71,6 +146,27 @@
         });
       });
       feather.replace();
+      fetch("/api/status")
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (data) {
+          var containerText = document.getElementById("statusText");
+          containerText.innerText = data.status;
+          if (data.status.toLowerCase().includes("down")) {
+            document.getElementById("statusDown").classList.remove("hidden");
+            document.getElementById("statusUp").classList.add("hidden");
+            document.getElementById("statusM").classList.add("hidden");
+          } else if (data.status.toLowerCase().includes("online")) {
+            document.getElementById("statusUp").classList.remove("hidden");
+            document.getElementById("statusDown").classList.add("hidden");
+            document.getElementById("statusM").classList.add("hidden");
+          } else {
+            document.getElementById("statusM").classList.remove("hidden");
+            document.getElementById("statusUp").classList.add("hidden");
+            document.getElementById("statusDown").classList.add("hidden");
+          }
+        });
     </script>
   </body>
 </html>

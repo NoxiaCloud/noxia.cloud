@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+header {
+  @apply fixed;
+  @apply z-[999];
+  @apply w-full;
+  @apply border-b;
+  @apply border-black/15;
+  @apply dark:border-white/10;
+  @apply px-4;
+  @apply md:px-[10%];
+  @apply py-4;
+  @apply flex;
+  @apply items-center;
+  @apply backdrop-blur-xl;
+}

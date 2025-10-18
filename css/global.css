@@ -1,17 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 @config "../tailwind.config.js";
 
 @import "tailwindcss";
 
 @import "./text.css";
-@import "./buttons.css";
-
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "./footer.css";
+@import "./header.css";
+@import "./themeToggle.css";
 
 :root {
-  --dark-background: rgb(15, 15, 20);
+  --dark-background: rgb(16, 16, 20);
   --light-background: white;
-  --accent: #6366f1;
-  --border-radius: 10px;
+  --accent: #826cff;
+  --border-radius: 12px;
+}
+
+* {
+  @apply font-nunito;
+  @apply transition-colors;
 }
 
 @layer base {
@@ -23,10 +30,22 @@
 body {
   @apply bg-[var(--light-background)];
   @apply dark:bg-[var(--dark-background)];
-  @apply transition-all;
+  @apply transition-colors;
   @apply duration-300;
 }
 
-*:not([class*="fa-"]) {
-  @apply font-["Poppins"];
+::-webkit-scrollbar {
+  margin: 15px;
+  background: transparent;
+  border: none;
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: var(--border-radius);
 }

@@ -1,14 +1,5 @@
 @import "tailwindcss";
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply mb-4;
-}
-
 h1 {
   @apply dark:text-white;
   @apply text-4xl;
@@ -52,5 +43,5 @@ p {
 
 small {
   @apply dark:text-white/50;
-  @apply text-xs;
+  @apply text-sm;
 }
